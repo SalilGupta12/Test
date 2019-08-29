@@ -3,20 +3,22 @@ pipeline {
     agent any
 
     stages {
-        stage('Build') {
-            steps {
-                echo 'Building..'
+       stage('Build') {
+      // Run the Taurus build
+   }
+   stage('Performance Tests') {
+    parallel(
+        BlazeMeterTest: {
+            dir ('Taurus-Repo') {
+                sh 'bzt <file_name>.yml -report'
             }
-        }
-        stage('Test') {
-            steps {
-                echo 'Testing..'
-            }
-        }
-        stage('Deploy') {
-            steps {
-                echo 'Deploying....'
-            }
-        }
+        },
+        Analysis: {
+            sleep 60
+        })
+   }
+
+   stage(‘Deploy’) {
+   }
     }
 }
