@@ -1,0 +1,17 @@
+---
+execution:
+  - executor: gatling
+    scenario: LoadTest
+    concurrency: 100
+    ramp-up: 5m
+    hold-for: 20m
+    throughput: 10
+
+    locations:
+      us-east-1: 50
+      us-west-1: 50
+
+scenarios:
+  LoadTest:
+    script: LoadTestSimulation.scala
+    simulation: LoadTestSimulation
